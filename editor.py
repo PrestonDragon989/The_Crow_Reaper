@@ -65,6 +65,7 @@ class Editor:
         # Background
         self.background = load_image("background.png")
         self.dayNightCycle = DayNightCycle()
+        self.dayNightCycle.night_locked = True
 
         self.text = Text(pygame.font.Font("data/images/pixelFont.ttf", 16), "data/images/pixelFont.ttf")
 
@@ -79,6 +80,8 @@ class Editor:
         self.right_clicking = False
         self.shift = False
         self.ongrid = True
+
+        self.sky = 0
 
         self.run()
 
@@ -197,7 +200,7 @@ class Editor:
                     if event.key == pygame.K_g:
                         self.ongrid = not self.ongrid
                     if event.key == pygame.K_o:
-                        self.tilemap.save(self.file)
+                        self.tilemap.save(self.file, sky=self.sky)
                         print(f"Saving {self.file}")
                     if event.key == pygame.K_t:
                         self.tilemap.autotile()
@@ -214,6 +217,12 @@ class Editor:
                                 color = colorchooser.askcolor(title="Choose a color")[0]
                                 if color:
                                     self.tilemap.text.append({'pos': (mpos[0] + self.scroll[0], mpos[1] + self.scroll[1]), 'text': text, "color": color, "size": size})
+                    if event.key == pygame.K_0:
+                        self.sky = 0
+                    if event.key == pygame.K_1:
+                        self.sky = 1
+                    if event.key == pygame.K_2:
+                        self.sky = 2
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
@@ -229,6 +238,7 @@ class Editor:
 
             self.text.sized_display(self.display, (0, 228), f"Tile: {self.tile_list[self.tile_group]}", (0, 0, 0), 10)
             self.text.sized_display(self.display, (0, 219), f"Variant: {self.tile_variant}", (0, 0, 0), 10)
+            self.text.sized_display(self.display, (0, 210), f"Sky: {self.sky}", (0, 0, 0), 10)
             self.text.sized_display(self.display, (235, 228), f"MPos: {round(mpos[0], 1)}, {round(mpos[1], 1)}", (0, 0, 0), 10)
             self.text.sized_display(self.display, (145, 228), f"Pos: {round(self.scroll[0], 1) + self.display.get_width() / 2}, {round(self.scroll[1], 1) + self.display.get_height() / 2}", (0, 0, 0), 10)
 

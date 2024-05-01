@@ -70,9 +70,9 @@ class Tilemap:
             if (tile['type'] in AUTOTILE_TYPES) and (neighbors in AUTOTILE_MAP):
                 tile['variant'] = AUTOTILE_MAP[neighbors]
 
-    def save(self, path):
+    def save(self, path, sky=0):
         f = open(path, 'w')
-        json.dump({'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles,
+        json.dump({'sky': sky, 'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles,
                    'tilemap': self.tilemap, 'text': self.text}, f)
         f.close()
 
@@ -87,6 +87,13 @@ class Tilemap:
             self.offgrid_tiles = map_data['offgrid']
             if "text" in map_data:
                 self.text = map_data['text']
+            self.game.dayNightCycle.day_locked = False
+            self.game.dayNightCycle.night_locked = False
+            if "sky" in map_data:
+                if map_data["sky"] == 1:
+                    self.game.dayNightCycle.day_locked = True
+                elif map_data["sky"] == 2:
+                    self.game.dayNightCycle.night_locked = True
 
             self.autotile()
         except TypeError or FileNotFoundError:

@@ -14,6 +14,7 @@ from scripts.effects.spark import Spark
 from scripts.effects.text import Text
 from scripts.entities.enemy import Enemy
 from scripts.entities.player import Player
+from scripts.levels import Levels
 from scripts.sprites import get_assets
 from scripts.tilemap import Tilemap
 
@@ -47,7 +48,8 @@ class Game:
 
         self.tilemap = Tilemap(self, tile_size=16)
 
-        self.level = 1
+        self.levels = Levels(self)
+        self.levels.load_sections()
 
         self.dayNightCycle = DayNightCycle()
 
@@ -66,7 +68,7 @@ class Game:
 
         self.transition = -30
 
-        self.load_level(self.level)
+        self.load_level(self.levels.current_level())
 
     def load_level(self, level):
         level_path = "data/maps/" + str(level) + ".json"
@@ -75,9 +77,9 @@ class Game:
         self.enemies.clear()
         self.enemy_projectiles.clear()
         for spawner in self.tilemap.extract(
-            [('spawners', 0), ('spawners', 1), ('spawners', 2), ('spawners', 3),
-            ('spawners', 4), ('spawners', 5), ('spawners', 6), ('spawners', 7)],
-            keep=False
+                [('spawners', 0), ('spawners', 1), ('spawners', 2), ('spawners', 3),
+                 ('spawners', 4), ('spawners', 5), ('spawners', 6), ('spawners', 7)],
+                keep=False
         ):
             if spawner['variant'] == 0:
                 self.player.pos = spawner['pos']
@@ -97,7 +99,7 @@ class Game:
         self.particles.clear()
         self.sparks.clear()
 
-        self.player.reset(int(level) - 1)
+        self.player.reset(int(self.levels.level) - 1)
         self.movement = [False, False]
 
         self.dayNightCycle.time = 0.9
@@ -129,13 +131,17 @@ class Game:
                 if self.dead >= 10:
                     self.transition = min(self.transition + 1, 30)
                 if self.dead > 40:
-                    self.load_level(self.level)
+                    if not self.levels.reached_four:
+                        self.load_level(self.levels.current_level())
+                    else:
+                        self.levels.level = 4
+                        self.load_level("4.5")
 
             if not len(self.enemies):
                 self.transition += 1
                 if self.transition > 30:
-                    self.level = min(self.level + 1, len(os.listdir('data/maps')))
-                    self.load_level(self.level)
+                    self.levels.update_level()
+                    self.load_level(self.levels.current_level())
             if self.transition < 0:
                 self.transition += 1
 
@@ -247,8 +253,8 @@ class Game:
                     if event.key == pygame.K_l:
                         self.player.level += 1
                     if event.key == pygame.K_n:
-                        self.level += 1
-                        self.load_level(self.level)
+                        self.levels.update_level()
+                        self.load_level(self.levels.current_level())
 
                 # Getting Key Up Presses
                 if event.type == pygame.KEYUP:
@@ -258,7 +264,8 @@ class Game:
                         self.movement[1] = False
 
             # Displaying Custom Curser
-            self.display.blit(self.assets['cursor'], (pygame.mouse.get_pos()[0] / self.scale - 8, pygame.mouse.get_pos()[1] / self.scale - 8))
+            self.display.blit(self.assets['cursor'],
+                              (pygame.mouse.get_pos()[0] / self.scale - 8, pygame.mouse.get_pos()[1] / self.scale - 8))
 
             self.player.render_gui(self.display, self.text)
 

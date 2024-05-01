@@ -49,10 +49,16 @@ class Player(PhysicsEntity):
 
         self.velocity = [0, 0]
 
-        self.souls = int(self.soul_data[str(last_level)]["souls"])
-        self.last_souls = self.souls - 1
-        self.level = int(self.soul_data[str(last_level)]["level"])
-        self.last_level = self.level - 1
+        if not self.game.levels.reached_four:
+            self.souls = int(self.soul_data[str(last_level)]["souls"])
+            self.last_souls = self.souls - 1
+            self.level = int(self.soul_data[str(last_level)]["level"])
+            self.last_level = self.level - 1
+        else:
+            self.souls = int(self.soul_data[str(4.5)]["souls"])
+            self.last_souls = self.souls - 1
+            self.level = int(self.soul_data[str(4.5)]["level"])
+            self.last_level = self.level - 1
 
     def update_level_features(self):
         self.max_jumps = 2 + max(0, math.floor(self.level / 2))
@@ -61,7 +67,9 @@ class Player(PhysicsEntity):
         self.attacks.can_dash = self.level >= 2
         self.attacks.damage_dash = self.level >= 5
 
-        if self.level >= 3:
+        if self.level >= 4:
+            self.left_weapon = random.choice(self.attacks.level_3_left_weapons)
+        elif self.level >= 3:
             self.left_weapon = self.attacks.standard_wisp
         elif self.level >= 2:
             self.left_weapon = self.attacks.simple_wisp

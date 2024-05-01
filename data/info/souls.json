@@ -3,5 +3,6 @@
   "1": {"souls": 5, "level": 1},
   "2": {"souls": 15, "level": 2},
   "3": {"souls": 35, "level": 3},
-  "4": {"souls": 36, "level": 3}
+  "4": {"souls": 36, "level": 3},
+  "4.5": {"souls": 35, "level": 3}
 }
