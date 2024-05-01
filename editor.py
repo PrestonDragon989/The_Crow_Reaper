@@ -19,6 +19,8 @@ class Editor:
     def __init__(self):
         self.tilemap = Tilemap(self, tile_size=16)
 
+        self.dayNightCycle = DayNightCycle()
+
         self.file, contin = self.get_file()
         print(f"Opened file: {self.file}")
 
@@ -29,6 +31,8 @@ class Editor:
         pygame.display.set_caption("editor")
         self.screen = pygame.display.set_mode((1280, 960))
         self.display = pygame.Surface((320, 240))
+
+        self.dayNightCycle.night_locked = True
 
         self.clock = pygame.time.Clock()
 
@@ -46,7 +50,7 @@ class Editor:
             self.assets["spawners"].append(load_spritesheet(f'entities/enemies/{color}/idle.png', (18, 18), (18, 18), 1)[0].subsurface(pygame.Rect(3, 2, 9, 16)), )
 
         # Adding Tinted Colors
-        for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((255, 0, 180), "purple")]:
+        for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((0, 0, 155), "cyan"), ((255, 0, 180), "purple")]:
             for tile in ["grass", "grass_custom", "stone", "decor", "large_decor"]:
                 if tile != "grass_custom":
                     self.assets[f"{tile}_{color[1]}"] = tint_images(load_images(f"tiles/{tile}"), color[0])
@@ -64,8 +68,6 @@ class Editor:
 
         # Background
         self.background = load_image("background.png")
-        self.dayNightCycle = DayNightCycle()
-        self.dayNightCycle.night_locked = True
 
         self.text = Text(pygame.font.Font("data/images/pixelFont.ttf", 16), "data/images/pixelFont.ttf")
 
@@ -103,7 +105,9 @@ class Editor:
             f.close()
             print(f"Creating {file}")
             return file, True
-        except TypeError or FileNotFoundError:
+        except FileNotFoundError:
+            return 'N/A', False
+        except TypeError:
             return 'N/A', False
 
     def run(self):

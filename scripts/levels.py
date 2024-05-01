@@ -42,3 +42,14 @@ class Levels:
                 self.level += 1
             self.level_section = self.pick_map(self.level)
 
+    def add_first_death_respawn_message(self, tilemap, text):
+        for added_text in [{"pos": [83.75, 41.75], "text": "You've died! Oh no!", "color": [153, 0, 217], "size": 13},
+                           {"pos": [73.25, 58.5], "text": "It's okay though,  you can go out again.",
+                            "color": [153, 0, 217], "size": 11},
+                           {"pos": [53.5, 73.75], "text": "What good would a one time reaper be anyway?",
+                            "color": [153, 0, 217], "size": 11}, {"pos": [55.75, 91.0],
+                                                                  "text": "Be careful this time though!",
+                                                                  "color": [153, 0, 217], "size": 11}]:
+            text.add_text_to_tilemap(tilemap, added_text["pos"], added_text["text"],
+                                     added_text["color"], added_text["size"])
+

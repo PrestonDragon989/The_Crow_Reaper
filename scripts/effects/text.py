@@ -19,3 +19,6 @@ class Text:
         else:
             self.font_cache[str(size)] = pygame.font.Font(self.font_path, size)
             surf.blit(self.font_cache[str(size)].render(text, False, color), pos)
+
+    def add_text_to_tilemap(self, tilemap, pos, text, color, size):
+        tilemap.text.append({"pos": pos, "text": text, "color": color, "size": size})

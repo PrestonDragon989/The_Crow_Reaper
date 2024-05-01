@@ -70,7 +70,7 @@ class Game:
 
         self.load_level(self.levels.current_level())
 
-    def load_level(self, level):
+    def load_level(self, level, loading_4_5=False):
         level_path = "data/maps/" + str(level) + ".json"
         self.tilemap.load(level_path)
 
@@ -99,7 +99,7 @@ class Game:
         self.particles.clear()
         self.sparks.clear()
 
-        self.player.reset(int(self.levels.level) - 1)
+        self.player.reset(int(self.levels.level) - 1, loading_4_5=loading_4_5)
         self.movement = [False, False]
 
         self.dayNightCycle.time = 0.9
@@ -135,9 +135,12 @@ class Game:
                         self.load_level(self.levels.current_level())
                     else:
                         self.levels.level = 4
-                        self.load_level("4.5")
+                        self.load_level("4.5", loading_4_5=True)
+                        if self.player.first_death:
+                            self.levels.add_first_death_respawn_message(self.tilemap, self.text)
+                            self.player.first_death = not self.player.first_death
 
-            if not len(self.enemies):
+            if not len(self.enemies) and not self.dead:
                 self.transition += 1
                 if self.transition > 30:
                     self.levels.update_level()
@@ -236,6 +239,10 @@ class Game:
                         mouse_pos = ((pygame.mouse.get_pos()[0] / self.scale) + self.scroll[0],
                                      (pygame.mouse.get_pos()[1] / self.scale) + self.scroll[1])
                         self.player.left_weapon(mouse_pos)
+                    if event.button == 3:
+                        mouse_pos = ((pygame.mouse.get_pos()[0] / self.scale) + self.scroll[0],
+                                     (pygame.mouse.get_pos()[1] / self.scale) + self.scroll[1])
+                        self.player.right_attack(mouse_pos)
 
                 # Getting Key Down Presses
                 if event.type == pygame.KEYDOWN:
@@ -255,6 +262,9 @@ class Game:
                     if event.key == pygame.K_n:
                         self.levels.update_level()
                         self.load_level(self.levels.current_level())
+                    if event.key == pygame.K_c:
+                        self.player.left_weapon = self.player.attacks.level_3_left_weapons[-1]
+                        print("Weapon is now", self.player.left_weapon)
 
                 # Getting Key Up Presses
                 if event.type == pygame.KEYUP:

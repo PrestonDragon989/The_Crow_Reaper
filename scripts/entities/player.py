@@ -32,6 +32,8 @@ class Player(PhysicsEntity):
         self.souls = 0
         self.last_souls = -1
 
+        self.first_death = True
+
         self.projectiles = []
 
         self.attacks = PlayerAttacks(self, self.game)
@@ -39,7 +41,7 @@ class Player(PhysicsEntity):
         self.left_weapon = self.attacks.basic_wisp
         self.right_weapon = None
 
-    def reset(self, last_level):
+    def reset(self, last_level, loading_4_5=False):
         self.dashing = 5
 
         self.projectiles.clear()
@@ -54,7 +56,7 @@ class Player(PhysicsEntity):
             self.last_souls = self.souls - 1
             self.level = int(self.soul_data[str(last_level)]["level"])
             self.last_level = self.level - 1
-        else:
+        elif loading_4_5:
             self.souls = int(self.soul_data[str(4.5)]["souls"])
             self.last_souls = self.souls - 1
             self.level = int(self.soul_data[str(4.5)]["level"])
@@ -68,13 +70,19 @@ class Player(PhysicsEntity):
         self.attacks.damage_dash = self.level >= 5
 
         if self.level >= 4:
-            self.left_weapon = random.choice(self.attacks.level_3_left_weapons)
+            if random.randint(1, 4) == 4:
+                self.right_weapon = random.choice(self.attacks.level_3_right_weapons)
+            else:
+                self.left_weapon = random.choice(self.attacks.level_3_left_weapons)
         elif self.level >= 3:
             self.left_weapon = self.attacks.standard_wisp
+            self.right_weapon = None
         elif self.level >= 2:
             self.left_weapon = self.attacks.simple_wisp
+            self.right_weapon = None
         elif self.level >= 0:
             self.left_weapon = self.attacks.basic_wisp
+            self.right_weapon = None
 
         self.last_level = self.level
 
@@ -170,6 +178,11 @@ class Player(PhysicsEntity):
     def left_attack(self, mouse_pos):
         self.attacks.player = self
         self.left_weapon(mouse_pos)
+
+    def right_attack(self, mouse_pos):
+        if self.right_weapon:
+            self.attacks.player = self
+            self.right_weapon(mouse_pos)
 
     def die_animation(self):
         self.game.screenshake = max(35, self.game.screenshake + 35)

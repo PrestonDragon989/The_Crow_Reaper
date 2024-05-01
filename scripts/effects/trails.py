@@ -30,11 +30,11 @@ class ProjectileTrails:
 
     def simple_wisp_trail(self, projectile):
         proj_rect = pygame.Rect(*projectile[0], *projectile[2])
-        pvelocity = [projectile[1][0] * -0.7, projectile[1][1] * -0.7]
+        pvelocity = [projectile[1][0] * -0.6, projectile[1][1] * -0.6]
         self.game.particles.append(
             Particle(self.game, 'particle' if random.randint(1, 10) == 1 else "shadow",
                      proj_rect.center, velocity=pvelocity, frame=random.randint(0, 7)))
-        if random.randint(1, 7) == 1:
+        if random.randint(1, 15) == 1:
             pos = (proj_rect.center[0] - projectile[1][0] * 2.3, proj_rect.center[1] - projectile[1][1] * 2.3)
             self.game.sparks.append(
                 Spark(pos,
@@ -94,7 +94,7 @@ class ProjectileTrails:
 
     def great_wisp_trail(self, projectile):
         proj_rect = pygame.Rect(*projectile[0], *projectile[2])
-        pvelocity = [projectile[1][0] * -0.99, projectile[1][1] * -0.99]
+        pvelocity = [projectile[1][0] * -1.2, projectile[1][1] * -1.2]
         self.game.particles.append(
             Particle(self.game, 'particle' if random.randint(1, 10) == 1 else "shadow",
                      proj_rect.center, velocity=pvelocity, frame=random.randint(0, 7)))
@@ -118,7 +118,7 @@ class ProjectileTrails:
                          velocity=pvelocity, frame=random.randint(0, 7)))
         for spark in range(num_projectiles // 3):
             angle = random.random() * math.pi * 2
-            speed = random.random() * 0.5 + 1
+            speed = random.random() * 0.5 + 1.2
             pvelocity = math.atan2(*[math.sin(angle) * speed, math.cos(angle) * speed])
             self.game.sparks.append(
                 Spark(proj_rect.center, pvelocity, 2, random.choice(
