@@ -72,7 +72,7 @@ class Enemy(PhysicsEntity):
 
         super().update(tilemap=tilemap, movement=movement)
 
-        if self.game.player.level >= 4:
+        if self.game.player.attacks.damage_dash:
             if abs(self.game.player.dashing) >= 50:
                 if self.rect().colliderect(self.game.player.rect()):
                     self.game.screenshake = max(17, self.game.screenshake + 1)

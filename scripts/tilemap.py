@@ -134,8 +134,8 @@ class Tilemap:
                 print("Removed spawner")
             else:
                 if optimize_offgrid:
-                    if ((self.game.player.pos[0] - tile['pos'][0]) ** 2 +
-                        (self.game.player.pos[1] - tile['pos'][1]) ** 2) ** 0.5 <= 320:
+                    if math.sqrt((tile['pos'][0] - self.game.player.pos[0]) ** 2
+                                 + (tile['pos'][1] - self.game.player.pos[1]) ** 2) <= 250:
                         surf.blit(self.game.assets[tile['type']][tile['variant']],
                                   (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1]))
                 else:
@@ -145,7 +145,7 @@ class Tilemap:
         for text in self.text:
             if optimize_offgrid:
                 if math.sqrt((text['pos'][0] - self.game.player.pos[0]) ** 2
-                             + (text['pos'][1] - self.game.player.pos[1]) ** 2) <= 250:
+                             + (text['pos'][1] - self.game.player.pos[1]) ** 2) <= 400:
                     text_engine.sized_display(surf, (text['pos'][0] - offset[0],
                                                      text['pos'][1] - offset[1]), text['text'],
                                               text["color"], text["size"])

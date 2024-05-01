@@ -124,6 +124,8 @@ class Game:
 
             if self.dead:
                 self.dead += 1
+                if self.dead == 10 or self.dead == 20 or self.dead == 40:
+                    self.player.die_animation()
                 if self.dead >= 10:
                     self.transition = min(self.transition + 1, 30)
                 if self.dead > 40:
@@ -132,7 +134,7 @@ class Game:
             if not len(self.enemies):
                 self.transition += 1
                 if self.transition > 30:
-                    self.level = min(self.level + 1, len(os.listdir('data/maps')) - 1)
+                    self.level = min(self.level + 1, len(os.listdir('data/maps')))
                     self.load_level(self.level)
             if self.transition < 0:
                 self.transition += 1
@@ -165,7 +167,6 @@ class Game:
             for projectile in self.player.projectiles.copy():
                 projectile[0][0] += projectile[1][0]
                 projectile[0][1] += projectile[1][1]
-                # print(projectile[0])
                 projectile[-1][0] += 1
                 projectile[3](projectile)
                 destroy = False
@@ -245,6 +246,9 @@ class Game:
 
                     if event.key == pygame.K_l:
                         self.player.level += 1
+                    if event.key == pygame.K_n:
+                        self.level += 1
+                        self.load_level(self.level)
 
                 # Getting Key Up Presses
                 if event.type == pygame.KEYUP:

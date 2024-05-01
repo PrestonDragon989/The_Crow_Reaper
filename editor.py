@@ -208,10 +208,12 @@ class Editor:
                         self.file, null = self.get_file()
                     if event.key == pygame.K_l:
                         text = simpledialog.askstring("What text do you want to display", "Please input text to be displayed: ")
-                        size = simpledialog.askinteger("What size do you want it to display", "Please input font size:")
-                        color = colorchooser.askcolor(title="Choose a color")[0]
-
-                        self.tilemap.text.append({'pos': (mpos[0] + self.scroll[0], mpos[1] + self.scroll[1]), 'text': text, "color": color, "size": size})
+                        if text:
+                            size = simpledialog.askinteger("What size do you want it to display", "Please input font size:")
+                            if size:
+                                color = colorchooser.askcolor(title="Choose a color")[0]
+                                if color:
+                                    self.tilemap.text.append({'pos': (mpos[0] + self.scroll[0], mpos[1] + self.scroll[1]), 'text': text, "color": color, "size": size})
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:

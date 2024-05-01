@@ -58,7 +58,12 @@ class Player(PhysicsEntity):
         self.max_jumps = 2 + max(0, math.floor(self.level / 2))
         self.jumps = self.max_jumps
 
-        if self.level >= 2:
+        self.attacks.can_dash = self.level >= 2
+        self.attacks.damage_dash = self.level >= 5
+
+        if self.level >= 3:
+            self.left_weapon = self.attacks.standard_wisp
+        elif self.level >= 2:
             self.left_weapon = self.attacks.simple_wisp
         elif self.level >= 0:
             self.left_weapon = self.attacks.basic_wisp
@@ -66,7 +71,7 @@ class Player(PhysicsEntity):
         self.last_level = self.level
 
     def check_falling_death(self, tilemap):
-        if self.air_time >= 220 + 100 if self.jumps else 0:
+        if self.air_time >= (220 + (80 if self.jumps else 0)):
             if tilemap.can_see_point(self.pos, (self.pos[0], self.pos[1] + 100)):
                 return True
         return False
@@ -148,7 +153,7 @@ class Player(PhysicsEntity):
             self.air_time = 5
 
     def dash(self):
-        if not self.dashing:
+        if not self.dashing and self.attacks.can_dash:
             if self.flip:
                 self.dashing = -60
             else:
