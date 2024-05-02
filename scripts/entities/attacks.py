@@ -63,6 +63,7 @@ class PlayerAttacks:
                                             speed, (3, 3), self.trails.basic_wisp_trail,
                                             self.trails.basic_projectile_burst, [0, 125]])
             self.last_basic_wisp += self.basic_wisp_timer
+            self.game.sound.effects["wisp_1"].play()
 
     def simple_wisp(self, mouse_pos):
         if not self.last_simple_wisp:
@@ -73,6 +74,7 @@ class PlayerAttacks:
                                             speed, (3, 3), self.trails.simple_wisp_trail,
                                             self.trails.simple_projectile_burst, [0, 125]])
             self.last_simple_wisp += self.simple_wisp_timer
+            self.game.sound.effects["wisp_1"].play()
 
     def standard_wisp(self, mouse_pos):
         if not self.last_standard_wisp:
@@ -83,6 +85,7 @@ class PlayerAttacks:
                                             speed, (3, 3), self.trails.standard_wisp_trail,
                                             self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_wisp += self.standard_wisp_timer
+            self.game.sound.effects["wisp_3"].play()
 
     def great_wisp(self, mouse_pos):
         if not self.last_great_wisp:
@@ -93,6 +96,7 @@ class PlayerAttacks:
                                             speed, (3, 3), self.trails.great_wisp_trail,
                                             self.trails.great_projectile_burst, [0, 125]])
             self.last_great_wisp += self.great_wisp_timer
+            self.game.sound.effects["wisp_3"].play()
 
     def basic_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -106,6 +110,7 @@ class PlayerAttacks:
                                                 (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_wisp_trail, [0, 7]])
                 self.last_basic_beam += self.basic_beam_timer
+                self.game.sound.effects["wisp_2"].play()
 
     def basic_dual_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
@@ -122,6 +127,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_projectile_burst, [0, 125]])
                 self.last_basic_dual_wisp += self.basic_dual_wisp_timer
+                self.game.sound.effects["wisp_1"].play(1)
 
     def standard_backstab_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -135,3 +141,4 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
                 self.last_standard_backstab_wisp += self.standard_backstab_wisp_timer
+                self.game.sound.effects["wisp_2"].play(1)

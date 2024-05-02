@@ -7,6 +7,7 @@ import pygame
 
 import platform
 
+from scripts.effects.sound import Sound
 from scripts.renderer import Renderer
 
 from scripts.effects.clouds import Clouds
@@ -41,6 +42,8 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.assets = get_assets()
+
+        self.sound = Sound(self)
 
         pygame.mouse.set_visible(False)
 
@@ -81,6 +84,8 @@ class Game:
 
         self.levels.update_level_shaders()
 
+        self.levels.update_level_music(self.sound)
+
         self.enemies.clear()
         self.enemy_projectiles.clear()
         for spawner in self.tilemap.extract(
@@ -108,6 +113,7 @@ class Game:
 
         self.player.reset(int(self.levels.level) - 1, loading_4_5=loading_4_5)
         self.movement = [False, False]
+        self.player.update_level_features()
 
         self.dayNightCycle.time = 0.9
 
@@ -181,6 +187,9 @@ class Game:
                         self.enemy_projectiles.remove(projectile)
                         self.dead += 1
                         self.player.die_animation()
+                        self.sound.effects['hit_1'].set_volume(1)
+                        self.sound.effects["hit_1"].play()
+                        self.sound.effects['hit_1'].set_volume(0.7)
 
             for projectile in self.player.projectiles.copy():
                 projectile[0][0] += projectile[1][0]

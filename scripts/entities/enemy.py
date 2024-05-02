@@ -99,6 +99,7 @@ class Enemy(PhysicsEntity):
     def die(self):
         enemy_rect = self.rect()
         self.game.screenshake = max(13, self.game.screenshake + 1)
+        self.game.sound.effects[random.choice(["hit_1", "hit_2", "hit_3", "hit_4"])].play()
         for i in range(25):
             angle = random.random() * math.pi * 2
             speed = random.random() * 5
@@ -118,11 +119,13 @@ class Enemy(PhysicsEntity):
         if abs(dis[1]) < 16:
             if self.flip and dis[0] < 0:
                 self.game.enemy_projectiles.append([[self.rect().centerx - 7, self.rect().centery], -1.5, 0])
+                self.game.sound.effects['shoot'].play()
                 for i in range(4):
                     self.game.sparks.append(
                         Spark(self.game.enemy_projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
             if not self.flip and dis[0] > 0:
                 self.game.enemy_projectiles.append([[self.rect().centerx + 7, self.rect().centery], 1.5, 0])
+                self.game.sound.effects['shoot'].play()
                 self.game.sparks.append(
                     Spark(self.game.enemy_projectiles[-1][0], random.random() - 0.5, 2 + random.random()))
 

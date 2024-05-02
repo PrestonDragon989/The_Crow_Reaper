@@ -67,7 +67,7 @@ class Player(PhysicsEntity):
         self.jumps = self.max_jumps
 
         self.attacks.can_dash = self.level >= 2
-        self.attacks.damage_dash = self.level >= 5
+        self.attacks.damage_dash = self.level >= 7
 
         if self.level >= 4:
             if random.randint(1, 4) == 4:
@@ -163,6 +163,7 @@ class Player(PhysicsEntity):
 
     def jump(self):
         if self.jumps:
+            self.game.sound.effects['flap'].play()
             self.set_action("flap")
             self.velocity[1] = -3
             self.jumps -= 1
@@ -170,6 +171,7 @@ class Player(PhysicsEntity):
 
     def dash(self):
         if not self.dashing and self.attacks.can_dash:
+            self.game.sound.effects['dash'].play()
             if self.flip:
                 self.dashing = -60
             else:
