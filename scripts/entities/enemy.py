@@ -98,7 +98,7 @@ class Enemy(PhysicsEntity):
 
     def die(self):
         enemy_rect = self.rect()
-        self.game.screenshake = max(13, self.game.screenshake + 1)
+        self.game.screenshake = max(7, self.game.screenshake + 1)
         self.game.sound.effects[random.choice(["hit_1", "hit_2", "hit_3", "hit_4"])].play()
         for i in range(25):
             angle = random.random() * math.pi * 2

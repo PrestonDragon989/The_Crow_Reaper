@@ -69,18 +69,28 @@ class Player(PhysicsEntity):
         self.attacks.can_dash = self.level >= 2
         self.attacks.damage_dash = self.level >= 7
 
-        if self.level >= 4:
+        if self.level >= 6:
             if random.randint(1, 4) == 4:
-                self.right_weapon = random.choice(self.attacks.level_3_right_weapons)
+                self.right_weapon = random.choice(self.attacks.level_6_right_weapons)
             else:
-                self.left_weapon = random.choice(self.attacks.level_3_left_weapons)
+                self.left_weapon = random.choice(self.attacks.level_6_left_weapons)
+        elif self.level >= 5:
+            if random.randint(1, 4) == 4:
+                self.right_weapon = random.choice(self.attacks.level_5_right_weapons)
+            else:
+                self.left_weapon = random.choice(self.attacks.level_5_left_weapons)
+        elif self.level >= 4:
+            if random.randint(1, 4) == 4:
+                self.right_weapon = random.choice(self.attacks.level_4_right_weapons)
+            else:
+                self.left_weapon = random.choice(self.attacks.level_4_left_weapons)
         elif self.level >= 3:
             self.left_weapon = self.attacks.standard_wisp
             self.right_weapon = None
         elif self.level >= 2:
             self.left_weapon = self.attacks.simple_wisp
             self.right_weapon = None
-        elif self.level >= 0:
+        else:
             self.left_weapon = self.attacks.basic_wisp
             self.right_weapon = None
 

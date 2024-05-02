@@ -25,11 +25,12 @@ class Sound:
         self.effects['hit_3'].set_volume(0.7)
         self.effects['hit_4'].set_volume(0.7)
         self.effects['wisp_1'].set_volume(0.15)
-        self.effects['wisp_2'].set_volume(0.15)
+        self.effects['wisp_2'].set_volume(0.125)
         self.effects['wisp_3'].set_volume(0.2)
 
         self.music = {
             "hub_music": pygame.mixer.Sound('data/sound/music/basic_hub_music.mp3'),
+            "level_music_1": pygame.mixer.Sound('data/sound/music/fight_level_music_1.mp3'),
             "level_music_2": pygame.mixer.Sound('data/sound/music/fight_level_music_2.mp3'),
             "level_music_3": pygame.mixer.Sound('data/sound/music/fight_level_music_3.mp3'),
             "level_music_4": pygame.mixer.Sound('data/sound/music/fight_level_music_4.mp3'),
