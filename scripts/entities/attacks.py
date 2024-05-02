@@ -1,4 +1,5 @@
 import math
+import random
 
 from scripts.effects.trails import ProjectileTrails
 
@@ -15,6 +16,9 @@ class PlayerAttacks:
 
         self.level_5_left_weapons = [self.amazing_wisp, self.basic_triple_wisp, self.standard_tripstab_wisp]
         self.level_5_right_weapons = [self.simple_beam]
+
+        self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
+        self.level_6_right_weapons = [self.standard_beam]
 
         self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
         self.level_6_right_weapons = [self.standard_beam]
@@ -157,6 +161,71 @@ class PlayerAttacks:
                                                 self.trails.basic_wisp_trail, [0, 7]])
                 self.last_basic_beam += self.basic_beam_timer - 1
                 self.game.sound.effects["wisp_2"].play()
+
+    def great_beam(self, mouse_pos):
+        if not self.last_basic_beam:
+            direction = math.atan2(mouse_pos[1] - self.player.rect().center[1],
+                                   mouse_pos[0] - self.player.rect().center[0])
+
+            for i in range(13):
+                pos = [self.player.rect().centerx + (i * 5.4) * math.cos(direction),
+                       self.player.rect().centery + (i * 5.4) * math.sin(direction)]
+                self.player.projectiles.append([pos,
+                                                (0, 0), (3, 3), self.trails.basic_wisp_trail,
+                                                self.trails.basic_wisp_trail, [0, 7]])
+                self.last_basic_beam += self.basic_beam_timer - 1
+                self.game.sound.effects["wisp_2"].play()
+
+    def amazing_beam(self, mouse_pos):
+        if not self.last_basic_beam:
+            direction = math.degrees(math.atan2(mouse_pos[1] - self.player.rect().center[1],
+                                     mouse_pos[0] - self.player.rect().center[0]))
+            for offset in [0, 1, 2, 3, 4, 5]:
+                direct = math.radians((direction + (offset * 60)) % 360)
+                if offset == 0:
+                    num = 14
+                else:
+                    num = 6
+                for i in range(num):
+                    pos = [self.player.rect().centerx + (i * 5.4) * math.cos(direct),
+                           self.player.rect().centery + (i * 5.4) * math.sin(direct)]
+                    self.player.projectiles.append([pos,
+                                                    (0, 0), (3, 3), self.trails.basic_wisp_trail,
+                                                    self.trails.basic_wisp_trail, [0, 7]])
+                    self.last_basic_beam += self.basic_beam_timer - 1
+                    self.game.sound.effects["wisp_2"].play()
+
+    def perfect_beam(self, mouse_pos):
+        if not self.last_basic_beam:
+            direction = math.degrees(math.atan2(mouse_pos[1] - self.player.rect().center[1],
+                                                mouse_pos[0] - self.player.rect().center[0]))
+            for offset in [0, 1, 2, 3, 4, 5]:
+                direct = math.radians((direction + (offset * 60)) % 360)
+                num = random.randint(12, 17)
+                for i in range(num):
+                    pos = [self.player.rect().centerx + (i * 5.4) * math.cos(direct),
+                           self.player.rect().centery + (i * 5.4) * math.sin(direct)]
+                    self.player.projectiles.append([pos,
+                                                    (0, 0), (3, 3), self.trails.basic_wisp_trail,
+                                                    self.trails.basic_wisp_trail, [0, 7]])
+                    self.last_basic_beam += self.basic_beam_timer - 1
+                    self.game.sound.effects["wisp_2"].play()
+
+    def true_reaper_beam(self, mouse_pos):
+        if not self.last_basic_beam:
+            direction = math.atan2(mouse_pos[1] - self.player.rect().center[1],
+                                   mouse_pos[0] - self.player.rect().center[0])
+            for offset in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+                direct = math.radians((direction + (offset * 30)) % 360)
+                num = random.randint(15, 22)
+                for i in range(num):
+                    pos = [self.player.rect().centerx + (i * 5.4) * math.cos(direct),
+                           self.player.rect().centery + (i * 5.4) * math.sin(direct)]
+                    self.player.projectiles.append([pos,
+                                                    (0, 0), (3, 3), self.trails.basic_wisp_trail,
+                                                    self.trails.basic_wisp_trail, [0, 7]])
+                    self.last_basic_beam += self.basic_beam_timer - 1
+                    self.game.sound.effects["wisp_2"].play()
 
     def basic_dual_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
