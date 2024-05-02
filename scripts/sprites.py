@@ -50,7 +50,7 @@ def get_assets():
         assets[f"enemy/{color}/run"] = Animation(load_spritesheet(f'entities/enemies/{color}/run.png', (13, 17), (18, 18), 7), img_dur=4)
 
     # Adding Tinted Colors
-    for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((0, 0, 155), "cyan"), ((255, 0, 180), "purple")]:
+    for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((0, 0, 155), "cyan"), ((100, 100, 255), "light_cyan"), ((255, 0, 180), "purple")]:
         for tile in ["grass", "grass_custom", "stone", "decor", "large_decor"]:
             if tile != "grass_custom":
                 assets[f"{tile}_{color[1]}"] = tint_images(load_images(f"tiles/{tile}"), color[0])

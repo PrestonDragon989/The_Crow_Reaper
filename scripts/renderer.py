@@ -7,9 +7,7 @@ SHADER_EXTENSION = ".glsl"
 
 
 class Renderer:
-    def __init__(self, display):
-        self.display = display
-
+    def __init__(self):
         self.ctx = moderngl.create_context()
 
         self.quad_buffer = self.ctx.buffer(data=array('f', [
@@ -25,9 +23,10 @@ class Renderer:
         }
         self.load_all_shaders()
 
-        self.program = self.ctx.program(vertex_shader=self.shaders["default"]["vertex"],
-                                        fragment_shader=self.shaders["default"]["fragment"])
-        self.render_object = self.ctx.vertex_array(self.program, [(self.quad_buffer, '2f 2f', 'vert', 'texcoord')])
+        self.program = None
+        self.render_object = None
+
+        self.change_shader("default")
 
     def change_shader(self, new_shader):
         self.program = self.ctx.program(vertex_shader=self.shaders[new_shader]["vertex"],
@@ -42,7 +41,7 @@ class Renderer:
         return tex
 
     def load_all_shaders(self):
-        for shader in ["default", "red_tint"]:
+        for shader in ["default", "reaper_theme", "red_tint", "haunted_theme"]:
             self.load_shader(shader, shader)
 
     def load_shader(self, shader_slot, shader):

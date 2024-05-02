@@ -19,5 +19,5 @@ in vec2 uvs;
 out vec4 f_color;
 
 void main() {
-    f_color = vec4(texture(tex, uvs).r * 2.5, texture(tex, uvs).gb, 1.0);
+    f_color = vec4(texture(tex, uvs).r * 1.5, texture(tex, uvs).g, texture(tex, uvs).b * 1.8, 1.0);
 }

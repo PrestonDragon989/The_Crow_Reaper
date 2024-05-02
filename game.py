@@ -1,5 +1,4 @@
 import math
-import os
 import random
 import sys
 
@@ -36,7 +35,7 @@ class Game:
                                               pygame.OPENGL | pygame.DOUBLEBUF)
         self.display = pygame.surface.Surface((self.width, self.height), pygame.SRCALPHA)
 
-        self.renderer = Renderer(self.display)
+        self.renderer = Renderer()
 
         self.fps = 60
         self.clock = pygame.time.Clock()
@@ -79,6 +78,8 @@ class Game:
     def load_level(self, level, loading_4_5=False):
         level_path = "data/maps/" + str(level) + ".json"
         self.tilemap.load(level_path)
+
+        self.levels.update_level_shaders()
 
         self.enemies.clear()
         self.enemy_projectiles.clear()
@@ -259,7 +260,7 @@ class Game:
                     if event.key == pygame.K_d:
                         self.movement[1] = True
 
-                    if event.key == pygame.K_w:
+                    if event.key == pygame.K_w or event.key == pygame.K_SPACE:
                         self.player.jump()
 
                     if event.key == pygame.K_LSHIFT:
@@ -295,7 +296,9 @@ class Game:
                 transition_surf.set_colorkey((255, 255, 255))
                 self.display.blit(transition_surf, (0, 0))
 
-            frame_tex = self.renderer.surf_to_texture(pygame.transform.scale(self.display, self.screen.get_size()))
+            scaled_display = pygame.transform.scale(self.display, self.screen.get_size())
+
+            frame_tex = self.renderer.surf_to_texture(scaled_display)
             frame_tex.use(0)
             self.renderer.program['tex'] = 0
             self.renderer.render_object.render(mode=moderngl.TRIANGLE_STRIP)

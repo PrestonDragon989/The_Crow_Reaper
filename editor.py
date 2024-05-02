@@ -4,11 +4,14 @@ import os
 
 import pygame
 
+import moderngl
+
 from tkinter import filedialog, colorchooser
 from tkinter import simpledialog
 
 from scripts.effects.day import DayNightCycle
 from scripts.effects.text import Text
+from scripts.renderer import Renderer
 from scripts.sprites import load_images, load_spritesheet, load_tileset, load_image, tint_images, convert_to_autotile
 from scripts.tilemap import Tilemap, PHYSICS_TILES, AUTOTILE_TYPES
 
@@ -29,8 +32,11 @@ class Editor:
         pygame.init()
 
         pygame.display.set_caption("editor")
-        self.screen = pygame.display.set_mode((1280, 960))
+        self.screen = pygame.display.set_mode((1280, 960),
+                                              pygame.OPENGL | pygame.DOUBLEBUF)
         self.display = pygame.Surface((320, 240))
+
+        self.renderer = Renderer()
 
         self.dayNightCycle.night_locked = True
 
@@ -50,7 +56,7 @@ class Editor:
             self.assets["spawners"].append(load_spritesheet(f'entities/enemies/{color}/idle.png', (18, 18), (18, 18), 1)[0].subsurface(pygame.Rect(3, 2, 9, 16)), )
 
         # Adding Tinted Colors
-        for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((0, 0, 155), "cyan"), ((255, 0, 180), "purple")]:
+        for color in [((255, 0, 0), "red"), ((255, 155, 0), "orange"), ((255, 233, 0), "yellow"), ((0, 255, 0), "green"), ((0, 0, 255), "blue"), ((0, 0, 155), "cyan"), ((100, 100, 255), "light_cyan"),  ((255, 0, 180), "purple")]:
             for tile in ["grass", "grass_custom", "stone", "decor", "large_decor"]:
                 if tile != "grass_custom":
                     self.assets[f"{tile}_{color[1]}"] = tint_images(load_images(f"tiles/{tile}"), color[0])
@@ -246,8 +252,16 @@ class Editor:
             self.text.sized_display(self.display, (235, 228), f"MPos: {round(mpos[0], 1)}, {round(mpos[1], 1)}", (0, 0, 0), 10)
             self.text.sized_display(self.display, (145, 228), f"Pos: {round(self.scroll[0], 1) + self.display.get_width() / 2}, {round(self.scroll[1], 1) + self.display.get_height() / 2}", (0, 0, 0), 10)
 
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
-            pygame.display.update()
+            scaled_display = pygame.transform.scale(self.display, self.screen.get_size())
+
+            frame_tex = self.renderer.surf_to_texture(scaled_display)
+            frame_tex.use(0)
+            self.renderer.program['tex'] = 0
+            self.renderer.render_object.render(mode=moderngl.TRIANGLE_STRIP)
+
+            pygame.display.flip()
+
+            frame_tex.release()
             self.clock.tick(60)
 
 

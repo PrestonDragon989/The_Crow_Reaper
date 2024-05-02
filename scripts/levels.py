@@ -53,3 +53,14 @@ class Levels:
             text.add_text_to_tilemap(tilemap, added_text["pos"], added_text["text"],
                                      added_text["color"], added_text["size"])
 
+    def update_level_shaders(self):
+        current_level = self.current_level()
+        if current_level in {'1', '2', '4', '4.5'}:
+            self.game.renderer.change_shader("reaper_theme")
+        elif current_level in {'5/2'}:
+            self.game.renderer.change_shader("red_tint")
+        elif current_level in {'6/3', '5/3'}:
+            self.game.renderer.change_shader("haunted_theme")
+        else:
+            self.game.renderer.change_shader("default")
+
