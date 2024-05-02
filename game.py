@@ -281,8 +281,8 @@ class Game:
                         self.levels.update_level()
                         self.load_level(self.levels.current_level())
                     if event.key == pygame.K_c:
-                        self.player.left_weapon = self.player.attacks.level_3_left_weapons[-1]
-                        print("Weapon is now", self.player.left_weapon)
+                        self.player.right_weapon = self.player.attacks.level_10_right_weapons[-1]
+                        print("Weapon is now", self.player.right_weapon)
 
                 # Getting Key Up Presses
                 if event.type == pygame.KEYUP:

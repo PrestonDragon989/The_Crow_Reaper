@@ -20,8 +20,17 @@ class PlayerAttacks:
         self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
         self.level_6_right_weapons = [self.standard_beam]
 
-        self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_6_right_weapons = [self.standard_beam]
+        self.level_7_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
+        self.level_7_right_weapons = [self.great_beam]
+
+        self.level_8_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
+        self.level_8_right_weapons = [self.amazing_beam]
+
+        self.level_9_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
+        self.level_9_right_weapons = [self.perfect_beam]
+
+        self.level_10_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
+        self.level_10_right_weapons = [self.true_reaper_beam]
 
         self.can_dash = False
         self.damage_dash = False
@@ -43,7 +52,7 @@ class PlayerAttacks:
         self.great_wisp_timer = 40
 
         self.last_basic_beam = 0
-        self.basic_beam_timer = 13
+        self.basic_beam_timer = 43
 
         self.basic_dual_wisp_speed = 1.5
         self.last_basic_dual_wisp = 0
@@ -131,8 +140,8 @@ class PlayerAttacks:
                 self.player.projectiles.append([pos,
                                                 (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_wisp_trail, [0, 7]])
-                self.last_basic_beam += self.basic_beam_timer
-                self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer + 6
+            self.game.sound.effects["wisp_2"].play()
 
     def simple_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -145,8 +154,8 @@ class PlayerAttacks:
                 self.player.projectiles.append([pos,
                                                 (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_wisp_trail, [0, 7]])
-                self.last_basic_beam += self.basic_beam_timer + 2
-                self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer + 2
+            self.game.sound.effects["wisp_2"].play()
 
     def standard_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -159,8 +168,8 @@ class PlayerAttacks:
                 self.player.projectiles.append([pos,
                                                 (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_wisp_trail, [0, 7]])
-                self.last_basic_beam += self.basic_beam_timer - 1
-                self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer - 1
+            self.game.sound.effects["wisp_2"].play()
 
     def great_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -173,8 +182,8 @@ class PlayerAttacks:
                 self.player.projectiles.append([pos,
                                                 (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_wisp_trail, [0, 7]])
-                self.last_basic_beam += self.basic_beam_timer - 1
-                self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer - 1
+            self.game.sound.effects["wisp_2"].play()
 
     def amazing_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -192,8 +201,8 @@ class PlayerAttacks:
                     self.player.projectiles.append([pos,
                                                     (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                     self.trails.basic_wisp_trail, [0, 7]])
-                    self.last_basic_beam += self.basic_beam_timer - 1
-                    self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer - 1
+            self.game.sound.effects["wisp_2"].play()
 
     def perfect_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -208,8 +217,8 @@ class PlayerAttacks:
                     self.player.projectiles.append([pos,
                                                     (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                     self.trails.basic_wisp_trail, [0, 7]])
-                    self.last_basic_beam += self.basic_beam_timer - 1
-                    self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer - 4
+            self.game.sound.effects["wisp_2"].play()
 
     def true_reaper_beam(self, mouse_pos):
         if not self.last_basic_beam:
@@ -224,8 +233,8 @@ class PlayerAttacks:
                     self.player.projectiles.append([pos,
                                                     (0, 0), (3, 3), self.trails.basic_wisp_trail,
                                                     self.trails.basic_wisp_trail, [0, 7]])
-                    self.last_basic_beam += self.basic_beam_timer - 1
-                    self.game.sound.effects["wisp_2"].play()
+            self.last_basic_beam += self.basic_beam_timer - 6
+            self.game.sound.effects["wisp_2"].play()
 
     def basic_dual_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
