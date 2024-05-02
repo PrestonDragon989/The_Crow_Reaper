@@ -11,26 +11,26 @@ class PlayerAttacks:
 
         self.trails = ProjectileTrails(self.game)
 
-        self.level_4_left_weapons = [self.great_wisp, self.basic_dual_wisp, self.standard_backstab_wisp]
-        self.level_4_right_weapons = [self.basic_beam]
+        self.level_4_left_weapons = [self.great_wisp, self.basic_dual_wisp, self.standard_backstab_wisp]  # Done
+        self.level_4_right_weapons = [self.basic_beam]  # Done
 
-        self.level_5_left_weapons = [self.amazing_wisp, self.basic_triple_wisp, self.standard_tripstab_wisp]
-        self.level_5_right_weapons = [self.simple_beam]
+        self.level_5_left_weapons = [self.amazing_wisp, self.basic_triple_wisp, self.standard_tripstab_wisp]  # Done
+        self.level_5_right_weapons = [self.simple_beam]  # Done
 
-        self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_6_right_weapons = [self.standard_beam]
+        self.level_6_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]  # Done
+        self.level_6_right_weapons = [self.standard_beam]  # Done
 
         self.level_7_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_7_right_weapons = [self.great_beam]
+        self.level_7_right_weapons = [self.great_beam]  # Done
 
         self.level_8_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_8_right_weapons = [self.amazing_beam]
+        self.level_8_right_weapons = [self.amazing_beam]  # Done
 
         self.level_9_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_9_right_weapons = [self.perfect_beam]
+        self.level_9_right_weapons = [self.perfect_beam]  # Done
 
         self.level_10_left_weapons = [self.standard_bow_wisp, self.standard_dual_wisp, self.standard_hexastab_wisp]
-        self.level_10_right_weapons = [self.true_reaper_beam]
+        self.level_10_right_weapons = [self.true_reaper_beam]  # Done
 
         self.can_dash = False
         self.damage_dash = False
