@@ -3,9 +3,12 @@ import os
 import random
 import sys
 
+import moderngl
 import pygame
 
 import platform
+
+from scripts.renderer import Renderer
 
 from scripts.effects.clouds import Clouds
 from scripts.effects.day import DayNightCycle
@@ -29,8 +32,11 @@ class Game:
         self.height = 240
 
         pygame.display.set_caption("The Crow Reaper")
-        self.screen = pygame.display.set_mode((self.width * self.scale, self.height * self.scale))
+        self.screen = pygame.display.set_mode((self.width * self.scale, self.height * self.scale),
+                                              pygame.OPENGL | pygame.DOUBLEBUF)
         self.display = pygame.surface.Surface((self.width, self.height), pygame.SRCALPHA)
+
+        self.renderer = Renderer(self.display)
 
         self.fps = 60
         self.clock = pygame.time.Clock()
@@ -121,6 +127,8 @@ class Game:
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 27
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 27
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+            render_scroll = (int(render_scroll[0] + (random.random() * self.screenshake - self.screenshake / 2)),
+                             int(render_scroll[1] + (random.random() * self.screenshake - self.screenshake / 2)))
 
             self.screenshake = max(0, self.screenshake - 1)
 
@@ -287,12 +295,15 @@ class Game:
                 transition_surf.set_colorkey((255, 255, 255))
                 self.display.blit(transition_surf, (0, 0))
 
-            screenshake_offset = (random.random() * self.screenshake - self.screenshake / 2,
-                                  random.random() * self.screenshake - self.screenshake / 2)
+            frame_tex = self.renderer.surf_to_texture(pygame.transform.scale(self.display, self.screen.get_size()))
+            frame_tex.use(0)
+            self.renderer.program['tex'] = 0
+            self.renderer.render_object.render(mode=moderngl.TRIANGLE_STRIP)
 
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), screenshake_offset)
+            pygame.display.flip()
 
-            pygame.display.update()
+            frame_tex.release()
+
             self.clock.tick(self.fps)
 
 
