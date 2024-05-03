@@ -113,7 +113,6 @@ class Game:
 
         self.player.reset(int(self.levels.level) - 1, loading_4_5=loading_4_5)
         self.movement = [False, False]
-        self.player.update_level_features()
 
         self.dayNightCycle.time = 0.9
 
@@ -169,7 +168,8 @@ class Game:
             self.tilemap.render(self.display, self.text, render_scroll)
 
             for projectile in self.enemy_projectiles.copy():
-                projectile[0][0] += projectile[1]
+                projectile[0][0] += projectile[1][0]
+                projectile[0][1] += projectile[1][1]
                 projectile[2] += 1
                 img = self.assets['enemy/arrow'][0]
                 self.display.blit(img, (projectile[0][0] - img.get_width() / 2 - render_scroll[0],
@@ -178,7 +178,7 @@ class Game:
                     self.enemy_projectiles.remove(projectile)
                     for i in range(4):
                         self.sparks.append(
-                            Spark(projectile[0], random.random() - 0.5 + (math.pi if projectile[1] > 0 else 0),
+                            Spark(projectile[0], random.random() - 0.5 + (math.pi if projectile[1][0] > 0 else 0),
                                   2 + random.random()))
                 elif projectile[2] > 360:
                     self.enemy_projectiles.remove(projectile)
@@ -225,10 +225,12 @@ class Game:
 
             # Updating Leaves from trees
             for rect in self.leaf_spawners:
-                if random.random() * 49999 < rect.width * rect.height:
-                    pos = (rect.x + random.random() * rect.width, rect.y + random.random() * rect.height)
-                    self.particles.append(Particle(self, 'leaf', pos,
-                                                   velocity=[-0.1, 0.3], frame=random.randint(0, 20)))
+                if math.sqrt((rect.centerx - self.player.pos[0]) ** 2
+                             + (rect.centery - self.player.pos[1]) ** 2) <= 200:
+                    if random.random() * 49999 < rect.width * rect.height:
+                        pos = (rect.x + random.random() * rect.width, rect.y + random.random() * rect.height)
+                        self.particles.append(Particle(self, 'leaf', pos,
+                                                       velocity=[-0.1, 0.3], frame=random.randint(0, 20)))
 
             # Updating and Rendering Particles / Sparks
             for spark in self.sparks.copy():
@@ -281,8 +283,9 @@ class Game:
                         self.levels.update_level()
                         self.load_level(self.levels.current_level())
                     if event.key == pygame.K_c:
-                        self.player.right_weapon = self.player.attacks.level_10_right_weapons[-1]
-                        print("Weapon is now", self.player.right_weapon)
+                        self.player.left_weapon = self.player.attacks.true_reaper_wisp
+                        print("Left Weapon is now", self.player.left_weapon)
+                        print("Right Weapon is now", self.player.right_weapon)
 
                 # Getting Key Up Presses
                 if event.type == pygame.KEYUP:

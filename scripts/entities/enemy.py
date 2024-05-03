@@ -117,14 +117,19 @@ class Enemy(PhysicsEntity):
     def shoot(self):
         dis = (self.game.player.pos[0] - self.pos[0], self.game.player.pos[1] - self.pos[1])
         if abs(dis[1]) < 16:
+            direction = math.radians(math.degrees(math.atan2(self.game.player.rect().center[1] - self.rect().center[1],
+                                                             self.game.player.rect().center[0] - self.rect().center[0])) % 360)
+            speed = (1.5 * math.cos(direction), 1.5 * math.sin(direction))
             if self.flip and dis[0] < 0:
-                self.game.enemy_projectiles.append([[self.rect().centerx - 7, self.rect().centery], -1.5, 0])
+                self.game.enemy_projectiles.append([[self.rect().centerx - 7, self.rect().centery],
+                                                    [-1.5, 0] if random.randint(1, 3) == 1 else speed, 0])
                 self.game.sound.effects['shoot'].play()
                 for i in range(4):
                     self.game.sparks.append(
                         Spark(self.game.enemy_projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
             if not self.flip and dis[0] > 0:
-                self.game.enemy_projectiles.append([[self.rect().centerx + 7, self.rect().centery], 1.5, 0])
+                self.game.enemy_projectiles.append([[self.rect().centerx + 7, self.rect().centery],
+                                                    [1.5, 0] if random.randint(1, 3) == 1 else speed, 0])
                 self.game.sound.effects['shoot'].play()
                 self.game.sparks.append(
                     Spark(self.game.enemy_projectiles[-1][0], random.random() - 0.5, 2 + random.random()))

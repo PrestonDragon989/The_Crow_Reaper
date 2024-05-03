@@ -40,6 +40,11 @@ class Levels:
             self.reached_four = True
             if str(self.level + 1) in self.level_sections:
                 self.level += 1
+            else:
+                sections = []
+                for key in self.level_sections:
+                    sections.append(int(key))
+                self.level = random.choice(sections)
             self.level_section = self.pick_map(self.level)
 
     def add_first_death_respawn_message(self, tilemap, text):
@@ -57,7 +62,7 @@ class Levels:
         current_level = self.current_level()
         if current_level in {'1', '2', '4', '4.5'}:
             self.game.renderer.change_shader("reaper_theme")
-        elif current_level in {'5/2'}:
+        elif current_level in {'5/2', '7/3'}:
             self.game.renderer.change_shader("red_tint")
         elif current_level in {'6/3', '5/3'}:
             self.game.renderer.change_shader("haunted_theme")
@@ -68,7 +73,7 @@ class Levels:
         current_level = self.current_level()
         if current_level in {'1', '2', '4', '4.5'}:
             sound.play_music("hub")
-        elif current_level in {'5/2'}:
+        elif current_level in {'5/2', '7/3'}:
             sound.play_music(3)
         elif current_level in {'6/3', '5/3'}:
             sound.play_music(2)
