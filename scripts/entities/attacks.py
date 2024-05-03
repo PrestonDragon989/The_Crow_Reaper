@@ -369,7 +369,7 @@ class PlayerAttacks:
                 self.player.projectiles.append([pos,
                                                 speed, (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_projectile_burst, [0, 125]])
-                self.last_basic_dual_wisp += self.basic_dual_wisp_timer
+                self.last_basic_dual_wisp += self.basic_dual_wisp_timer - 10
                 self.game.sound.effects["wisp_1"].play(3)
 
     def basic_true_reaper_swarm_wisp(self, mouse_pos):
