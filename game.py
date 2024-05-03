@@ -26,7 +26,7 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.scale = 4 if "Linux" in platform.platform() else 2
+        self.scale = 4 if "Linux" in platform.platform() else 3
 
         self.width = 320
         self.height = 240
