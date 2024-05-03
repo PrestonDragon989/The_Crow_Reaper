@@ -149,7 +149,9 @@ class Game:
                         self.load_level(self.levels.current_level())
                     else:
                         self.levels.level = 4
+                        self.player.last_soul_collection = self.player.souls - 35
                         self.load_level("4.5", loading_4_5=True)
+                        self.text.show_last_souls(self.tilemap, self.player)
                         if self.player.first_death:
                             self.levels.add_first_death_respawn_message(self.tilemap, self.text)
                             self.player.first_death = not self.player.first_death
@@ -283,7 +285,6 @@ class Game:
                         self.levels.update_level()
                         self.load_level(self.levels.current_level())
                     if event.key == pygame.K_c:
-                        self.player.left_weapon = self.player.attacks.true_reaper_wisp
                         print("Left Weapon is now", self.player.left_weapon)
                         print("Right Weapon is now", self.player.right_weapon)
 

@@ -31,6 +31,7 @@ class Player(PhysicsEntity):
         self.last_level = 0
         self.souls = 0
         self.last_souls = -1
+        self.last_soul_collection = 0
 
         self.first_death = True
 

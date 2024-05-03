@@ -64,7 +64,9 @@ class Levels:
             self.game.renderer.change_shader("reaper_theme")
         elif current_level in {'5/2', '7/3'}:
             self.game.renderer.change_shader("red_tint")
-        elif current_level in {'6/3', '5/3'}:
+        elif current_level in {'7/4'}:
+            self.game.renderer.change_shader("green_tint")
+        elif current_level in {'6/3', '5/3', '8/2', '8/4'}:
             self.game.renderer.change_shader("haunted_theme")
         else:
             self.game.renderer.change_shader("default")
@@ -75,12 +77,12 @@ class Levels:
             sound.play_music("hub")
         elif current_level in {'5/2', '7/3'}:
             sound.play_music(3)
-        elif current_level in {'6/3', '5/3'}:
+        elif current_level in {'6/3', '5/3', '8/2', '8/4'}:
             sound.play_music(2)
         elif current_level in {'6/1', '5/1'}:
             sound.play_music(6)
         elif current_level in {'6/4', '5/4', '6/2', '3'}:
             sound.play_music(4)
         else:
-            sound.play_music("hub")
+            sound.play_music(1)
 

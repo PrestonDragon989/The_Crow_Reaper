@@ -41,7 +41,7 @@ class Renderer:
         return tex
 
     def load_all_shaders(self):
-        for shader in ["default", "reaper_theme", "red_tint", "haunted_theme"]:
+        for shader in ["default", "reaper_theme", "red_tint", "green_tint", "haunted_theme"]:
             self.load_shader(shader, shader)
 
     def load_shader(self, shader_slot, shader):

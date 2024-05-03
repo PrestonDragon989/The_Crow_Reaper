@@ -22,3 +22,7 @@ class Text:
 
     def add_text_to_tilemap(self, tilemap, pos, text, color, size):
         tilemap.text.append({"pos": pos, "text": text, "color": color, "size": size})
+
+    def show_last_souls(self, tilemap, player):
+        self.add_text_to_tilemap(tilemap, (95, 30), f"Souls Collected: ", (255, 235, 255), 12)
+        self.add_text_to_tilemap(tilemap, (76 + 112, 30), f"{player.last_soul_collection}", (44, 199, 199), 12)

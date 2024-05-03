@@ -319,7 +319,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
                 self.last_basic_dual_wisp += self.basic_dual_wisp_timer + 3
-                self.game.sound.effects["wisp_1"].play(1)
+                self.game.sound.effects["wisp_1"].play(2)
 
     def basic_triple_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
@@ -353,7 +353,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
                 self.last_basic_dual_wisp += self.basic_dual_wisp_timer
-                self.game.sound.effects["wisp_1"].play(2)
+                self.game.sound.effects["wisp_1"].play(3)
 
     def basic_quad_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
@@ -370,7 +370,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.basic_wisp_trail,
                                                 self.trails.basic_projectile_burst, [0, 125]])
                 self.last_basic_dual_wisp += self.basic_dual_wisp_timer
-                self.game.sound.effects["wisp_1"].play(2)
+                self.game.sound.effects["wisp_1"].play(3)
 
     def basic_true_reaper_swarm_wisp(self, mouse_pos):
         if not self.last_basic_dual_wisp:
@@ -443,7 +443,7 @@ class PlayerAttacks:
                 self.player.projectiles.append([[self.player.rect().centerx, self.player.rect().centery],
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
-                self.last_standard_backstab_wisp += self.standard_backstab_wisp_timer - 10
+                self.last_standard_backstab_wisp += self.standard_backstab_wisp_timer - 15
                 self.game.sound.effects["wisp_2"].play(2)
 
     def standard_decastab_wisp(self, mouse_pos):
@@ -457,8 +457,8 @@ class PlayerAttacks:
                 self.player.projectiles.append([[self.player.rect().centerx, self.player.rect().centery],
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
-                self.last_standard_backstab_wisp += self.standard_backstab_wisp_timer - 10
-                self.game.sound.effects["wisp_2"].play(2)
+                self.last_standard_backstab_wisp += self.standard_backstab_wisp_timer - 20
+                self.game.sound.effects["wisp_2"].play(4)
 
     def standard_multistab_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -486,7 +486,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_backstab_wisp += (self.standard_backstab_wisp_timer + 75)
-            self.game.sound.effects["wisp_2"].play(1)
+            self.game.sound.effects["wisp_2"].play(2)
 
     def great_bow_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -500,7 +500,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_backstab_wisp += (self.standard_backstab_wisp_timer + 85)
-            self.game.sound.effects["wisp_2"].play(2)
+            self.game.sound.effects["wisp_2"].play(3)
 
     def amazing_bow_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -514,7 +514,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_backstab_wisp += (self.standard_backstab_wisp_timer + 75)
-            self.game.sound.effects["wisp_2"].play(2)
+            self.game.sound.effects["wisp_2"].play(3)
 
     def perfect_bow_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -528,7 +528,7 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_backstab_wisp += (self.standard_backstab_wisp_timer + 72)
-            self.game.sound.effects["wisp_2"].play(2)
+            self.game.sound.effects["wisp_2"].play(4)
 
     def true_reaper_bow_wisp(self, mouse_pos):
         if not self.last_standard_backstab_wisp:
@@ -542,4 +542,4 @@ class PlayerAttacks:
                                                 speed, (3, 3), self.trails.standard_wisp_trail,
                                                 self.trails.standard_projectile_burst, [0, 125]])
             self.last_standard_backstab_wisp += (self.standard_backstab_wisp_timer + 67)
-            self.game.sound.effects["wisp_2"].play(3)
+            self.game.sound.effects["wisp_2"].play(4)
